@@ -1,0 +1,45 @@
+.sidenav .navbar-brand{
+    padding: 7px;
+}
+
+.navbar-vertical .navbar-brand-img, .navbar-vertical .navbar-brand > img{
+    max-height: 6rem;
+}
+
+.breadcrumb{
+    margin-bottom: 0;
+}
+
+
+.login-header{
+    padding: 200px;
+    padding-top: 100px;
+}
+
+.login-container{
+    margin-top:-250px;
+}
+
+.login-logo{
+    width: 60%;
+}
+
+.header1{
+    font-size: 30px;
+}
+
+.login-container .card-body{
+    padding-top: 0px !important;
+}
+
+.btn:hover{
+    transform: none;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .4);
+}
+
+@media (max-width:991px){
+    .login-header{
+        padding: 50px 0 150px 0px;
+    }
+
+}
