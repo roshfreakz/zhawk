@@ -24247,9 +24247,8 @@ table.dataTable tbody>tr.selected {
 }
 
 .dataTables_filter {
-    display: inline-block;
-    /* float: right; */
-
+    /* display: inline-block; */
+    float: right;
     padding-right: 1.5rem;
 }
 

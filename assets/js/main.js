@@ -1,3 +1,18 @@
+$(function () {
+  if (localStorage.getItem("userData") != null) {
+    var userData = JSON.parse(localStorage.getItem("userData"));
+    $('#spanFullName').text(userData.FullName);
+  }
+
+  var page = window.location.pathname;
+  var path = page.split("/");
+  var npath = path[2]; 
+  console.log(npath);
+  $('#navbar-sidebar li a').removeClass('active');
+  $('#navbar-sidebar li a[href="' + npath + '"]').addClass('active');
+
+})
+
 function ShowLoadingFn() {
   $('#loader').show();
   $('button').prop('disabled', true);
@@ -22,4 +37,3 @@ function showNotify(msg, type) {
       '</div>'
   });
 }
-

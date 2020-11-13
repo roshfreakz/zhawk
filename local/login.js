@@ -69,7 +69,6 @@ function RegisterUser(formData) {
             beforeSend: ShowLoadingFn
         })
         .done(function (data) {
-            console.log(data);
             if (data.Status) {
                 showNotify(data.Result, 'success');
                 ToggleScreen('login');

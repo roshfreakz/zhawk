@@ -59,13 +59,13 @@ var Layout = (function () {
 				unpinSidenav();
 				break;
 
-		
+
 		}
 	})
 
 
-	
-	
+
+
 	// Add sidenav modifier classes on mouse events
 
 	$('.sidenav').on('mouseenter', function () {
@@ -206,13 +206,13 @@ var NavbarCollapse = (function () {
 			$('body').addClass('nav-open');
 			navbar_menu_visible = 1;
 
-			$('.bodyClick').on('mouseenter', function(){
+			$('.bodyClick').on('mouseenter', function () {
 				$('.sidenav-toggler').removeClass('active');
-		$('.sidenav-toggler').data('action', 'sidenav-pin');
-		$('body').removeClass('g-sidenav-pinned').addClass('g-sidenav-hidden');
-		$('body').find('.backdrop').remove();
+				$('.sidenav-toggler').data('action', 'sidenav-pin');
+				$('body').removeClass('g-sidenav-pinned').addClass('g-sidenav-hidden');
+				$('body').find('.backdrop').remove();
 			})
-		
+
 		}
 
 	});
