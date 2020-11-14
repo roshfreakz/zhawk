@@ -1,0 +1,67 @@
+<div class="modal  fade" id="AddContactModal" tabindex="-1" role="dialog" aria-labelledby="AddContactModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary ">
+                <h3 class="modal-title text-white">Add Contact</h3>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true ">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="contactForm">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-username">Name</label>
+                                <input class="form-control" name="FullName" type="text" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-username">Mobile</label>
+                                <input class="form-control" name="Mobile" type="text" readonly required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-first-name">Email</label>
+                                <input class="form-control" name="Email" type="email" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-first-name">Status</label>
+                                <select class="form-control" name="Status" required>
+                                    <option>Online</option>
+                                    <option>Do Not Disturb</option>
+                                    <option>Start Campaign</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-last-name">Notes</label>
+                                <textarea class="form-control" name="Notes" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div>
+                        <div class="col text-right">
+                            <input type="hidden" name="AddContact" value="true">
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

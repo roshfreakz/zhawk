@@ -2,7 +2,13 @@
 <html>
 
 <head>
-    <?php require_once("_header.html"); ?>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Zhawk</title>
+    <link rel="icon" href="img/logo-mini.png" type="image/png">
+    <link rel="stylesheet" href="css/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/argon.css" type="text/css">
+    <link rel="stylesheet" href="css/custom.css" type="text/css">
 </head>
 
 <body class="bg-default">
@@ -28,121 +34,31 @@
                 <div class="col-lg-5 col-md-7">
                     <div class="card bg-secondary border-0 mb-0">
                         <div class="card-header bg-transparent text-center">
-                            <img src="assets/img/brand/logo-full.png" class="img-fluid login-logo" alt="logo">
+                            <img src="img/logo-full.png" class="img-fluid login-logo" alt="logo">
                         </div>
                         <div class="card-body px-lg-5 py-lg-5">
-
-                            <!-- Login -->
                             <form role="form" id="divlogin">
-                                <h1 class="header1 text-center py-3">Login</h1>
                                 <div class="form-group mb-3">
+                                    <label class="label-control small">Agent ID</label>
                                     <div class="input-group input-group-merge input-group-alternative">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                            <span class="input-group-text"><i class="fa fa-user"></i></span>
                                         </div>
-                                        <input class="form-control" name="Email" placeholder="Email" type="email" required>
+                                        <input class="form-control" type="text" name="id" value="102_2223264" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="label-control small">Password</label>
                                     <div class="input-group input-group-merge input-group-alternative">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                            <span class="input-group-text"><i class="fa fa-lock"></i></span>
                                         </div>
-                                        <input class="form-control" name="Password" placeholder="Password" type="password" required>
+                                        <input class="form-control" type="password" name="password" value="Sjrinfo@123" required>
                                     </div>
-                                </div>
-                                <div class="custom-control custom-control-alternative custom-checkbox">
-                                    <input class="custom-control-input" id="customCheckLogin" type="checkbox">
-                                    <label class="custom-control-label" for="customCheckLogin">
-                                        <span>Remember me</span>
-                                    </label>
                                 </div>
                                 <div class="text-center">
                                     <input type="hidden" name="CheckLogin" value="true">
                                     <button type="submit" class="btn btn-block btn-primary my-4">Login</button>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-6">
-                                        <a onclick="ToggleScreen('forgot')"><small>Forgot password <i class="fa fa-question"></i></small></a>
-                                    </div>
-                                    <div class="col-6 text-right">
-                                        <a onclick="ToggleScreen('register')"><small> Register <i class="fa fa-user-plus"></i></small></a>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <!-- Register -->
-                            <form role="form" id="divregister" style="display: none;">
-                                <h1 class="header1 text-center py-3">Register</h1>
-                                <div class="form-group mb-3">
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-single-02"></i></span>
-                                        </div>
-                                        <input class="form-control" name="FullName" placeholder="Full Name" type="text" required>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-mobile-button"></i></span>
-                                        </div>
-                                        <input class="form-control" name="Mobile" placeholder="Mobile" type="number" required>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                                        </div>
-                                        <input class="form-control" name="Email" placeholder="Email" type="email" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                                        </div>
-                                        <input class="form-control" name="Password" id="Pass" placeholder="Password" type="password" autocomplete="new-password" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-key-25"></i></span>
-                                        </div>
-                                        <input class="form-control" name="ConfirmPassword" id="CPass" placeholder="Confirm Password" type="password" autocomplete="new-password" required>
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <input type="hidden" name="RegisterUser" value="true">
-                                    <button type="submit" class="btn btn-block btn-primary my-4">Register</button>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col text-right">
-                                        <a onclick="ToggleScreen('login')"><small>Login <i class="fa fa-sign-in-alt"></i></small></a>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <!-- Forgot -->
-                            <form role="form" id="divforgot" style="display: none;">
-                                <h1 class="header1 text-center py-3">Forgot Password</h1>
-                                <div class="form-group mb-3">
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                                        </div>
-                                        <input class="form-control" placeholder="Email" type="email">
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-block btn-primary my-4">Submit</button>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col text-right">
-                                        <a onclick="ToggleScreen('login')"><small>Login <i class="fa fa-sign-in-alt"></i></small></a>
-                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -153,8 +69,43 @@
         </div>
     </div>
 
-    <?php require_once("_footer.html"); ?>
-    <script src="local/login.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap-notify.min.js"></script>
+    <script src="js/argon.js"></script>
+
+    <script>
+        localStorage.clear();
+        $('#divlogin').on('submit', function(e) {
+            e.preventDefault();
+            var formData = $(this).serializeArray();
+            $.ajax({
+                    url: 'https://piopiy.telecmi.com/v1/agentLogin',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: formData,
+                    beforeSend: ShowLoadingFn
+                })
+                .done(function(data) {
+                    if (data.code == 200) {
+                        showNotify("Login Success", 'success');
+                        localStorage.setItem("token", data.token);
+                        localStorage.setItem("userData", JSON.stringify(data.agent));
+                        window.location.href = "index.php";
+                    } else if (data.code == 404) {
+                        showNotify('Invalid agent id or password', 'warning');
+                    } else {
+                        showNotify('Authentication failed', 'danger');
+                    }
+                })
+                .always(function() {
+                    HideLoadingFn();
+                })
+                .fail(function(data) {
+                    showNotify('Server Error', 'danger');
+                });
+        });
+    </script>
 </body>
 
 </html>

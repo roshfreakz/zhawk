@@ -28,7 +28,7 @@
                     </div>
                     <!-- Card stats -->
                     <div class="row">
-                      
+
                         <div class="col-md-4 col-12">
                             <div class="card card-stats">
                                 <!-- Card body -->
@@ -36,7 +36,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <h5 class="card-title text-uppercase text-muted mb-0">Answered Calls</h5>
-                                            <span class="h2 card-numbers font-weight-bold mb-0" id="AnsweredCalls">...</span>
+                                            <span class="h2 card-numbers font-weight-bold mb-0" id="AnsweredCalls">0</span>
                                         </div>
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
@@ -44,7 +44,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                  
+
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <h5 class="card-title text-uppercase text-muted mb-0">Missed Calls</h5>
-                                            <span class="h2 card-numbers font-weight-bold mb-0" id="MissedCalls">...</span>
+                                            <span class="h2 card-numbers font-weight-bold mb-0" id="MissedCalls">0</span>
                                         </div>
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
@@ -63,7 +63,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                  
+
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <h5 class="card-title text-uppercase text-muted mb-0">Total Calls</h5>
-                                            <span class="h2 card-numbers font-weight-bold mb-0" id="TotalCalls">...</span>
+                                            <span class="h2 card-numbers font-weight-bold mb-0" id="TotalCalls">0</span>
                                         </div>
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -82,7 +82,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                  
+
                                 </div>
                             </div>
                         </div>
@@ -90,11 +90,55 @@
                 </div>
             </div>
         </div>
-     
     </div>
     <!-- Footer -->
     <?php require_once("_footer.html"); ?>
-    <script src="local/index.js"></script>
+    <script>
+        var todate = new Date();
+        var fromdate = new Date();
+        fromdate.setDate(todate.getDate() - 13);
+
+        var datastr = {
+            "token": localStorage.getItem('token'),
+            "from": Date.parse(fromdate),
+            "to": Date.parse(todate),
+        }
+
+        $(function() {
+            GetUserList();
+        })
+
+        function GetUserList() {
+
+            $.ajax({
+                    url: 'https://piopiy.telecmi.com/v1/agentAnalysis',
+                    method: 'POST',
+                    dataType: 'json',
+                    contentType: "application/json",
+                    data: JSON.stringify(datastr),
+                    beforeSend: ShowLoadingFn
+                })
+                .done(function(data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        if (data.calls.length > 0) {  
+                            var call = data.calls[0];                          
+                            $('#AnsweredCalls').text(call.answered);
+                            $('#MissedCalls').text(call.missed);
+                            $('#TotalCalls').text(call.answered + call.missed);
+                        }
+                    } else {
+                        showNotify('Error in Fetching Data', 'danger');
+                    }
+                })
+                .always(function() {
+                    HideLoadingFn();
+                })
+                .fail(function(data) {
+                    showNotify('Error in Fetching Data', 'danger');
+                });
+        }
+    </script>
 </body>
 
 </html>
