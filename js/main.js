@@ -15,7 +15,7 @@ $(function () {
   // Set Agent Status
   var telecmi = new TeleCMI();
   telecmi.start(localStorage.getItem('token'));
-
+  
   $('#statusForm').on('submit', function (e) {
     e.preventDefault();
     var status = $('#agentStatus').val();
@@ -32,6 +32,7 @@ $(function () {
     }
     showNotify('Agent Status Updated', 'success');
     $('#UpdateStatusModal').modal('hide');
+    $('#agentStatus').val(status);
   });
 
 });

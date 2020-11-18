@@ -239,6 +239,7 @@ var Tooltip = (function () {
 var Datepicker = (function () {
 
 	var $datepicker = $('.datepicker');
+
 	function init($this) {
 		var options = {
 			disableTouchKeyboard: true,
@@ -329,24 +330,24 @@ var noUiSlider = (function () {
 function ShowLoadingFn() {
 	$('#loader').show();
 	$('button').prop('disabled', true);
-  }
-  
-  function HideLoadingFn() {
+}
+
+function HideLoadingFn() {
 	setTimeout(function () {
-	  $('#loader').hide();
-	  $('button').prop('disabled', false);
+		$('#loader').hide();
+		$('button').prop('disabled', false);
 	}, 1000);
-  }
-  
-  function showNotify(msg, type) {
+}
+
+function showNotify(msg, type) {
 	$.notify({
-	  message: msg
+		message: msg
 	}, {
-	  type: type,
-	  allow_dismiss: true,
-	  template: '<div data-notify="container" class="notify alert alert-{0}" role="alert">' +
-		'<span data-notify="title">{1}</span>' +
-		'<span data-notify="message">{2}</span>' +
-		'</div>'
+		type: type,
+		delay: 50000,
+		offset: {
+			x: 30,
+			y: 100
+		}
 	});
-  }
+}
