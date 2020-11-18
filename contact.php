@@ -48,92 +48,16 @@
                                             <th class="wp-20">Name</th>
                                             <th class="wp-20">Email</th>
                                             <th class="wp-10">Mobile</th>
-                                            <th class="wp-30">Notes</th>
                                             <th class="wp-10">Status</th>
+                                            <th class="wp-30">Notes</th>
                                         </tr>
                                     </thead>
                                 </table>
                             </div>
-
-                            <form id="contactForm" style="display: none;">
-                                <h6 class="heading-small text-muted mb-4">Add Contact</h6>
-                                <div class="pl-lg-4">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-username">Full Name</label>
-                                                <input class="form-control" name="FullName" placeholder="Full Name" type="text" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-username">Mobile</label>
-                                                <input class="form-control" name="Mobile" placeholder="Mobile" type="number" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-first-name">Email</label>
-                                                <input class="form-control" name="Email" placeholder="Email" type="email" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-last-name">Password</label>
-                                                <input class="form-control" name="Password" id="Pass" placeholder="Password" type="password" autocomplete="new-password" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-last-name">Confirm Password</label>
-                                                <input class="form-control" name="ConfirmPassword" id="CPass" placeholder="Confirm Password" type="password" autocomplete="new-password" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-first-name">Status</label>
-                                                <select class="form-control" placeholder="Confirm Password" name="Status" required>
-                                                    <option>Online</option>
-                                                    <option>Do Not Disturb</option>
-                                                    <option>Start Campaign</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-last-name">Notes</label>
-                                                <textarea class="form-control" name="Notes" required></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <hr class="my-4">
-                                <div class="pl-lg-4">
-                                    <div class="row">
-                                        <div class="col text-right">
-                                            <div class="form-group">
-                                                <input type="hidden" name="AddContact" value="true">
-                                                <button type="submit" class="btn btn-success">Save</button>
-                                                <button type="button" class="btn btn-secondary ml-2" onclick="ToggleScreen('Table')">Cancel</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
         </div>
     </div>
     <!-- Footer -->
@@ -141,38 +65,44 @@
     <?php require_once("_addcontact.html"); ?>
     <script>
         $(function() {
-            GetUserList();
+            GetContactList();
 
             $('#contactForm').on('submit', function(e) {
                 e.preventDefault();
                 var formData = $(this).serializeArray();
-                var Pass = $('#Pass').val();
-                var CPass = $('#CPass').val();
-                if (Pass == CPass) AddContact(formData);
-                else showNotify("Passwords doesn't Match!", 'danger');
+                $.ajax({
+                        url: 'postContact.php',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: formData,
+                        beforeSend: ShowLoadingFn
+                    })
+                    .done(function(data) {
+                        if (data.Result) {
+                            GetContactList();
+                            showNotify(data.Result, 'success');
+                            $('#AddContactModal').modal('hide');
+                        } else {
+                            showNotify(data.Error, 'danger');
+                        }
+                    })
+                    .always(function() {
+                        HideLoadingFn();
+                    })
+                    .fail(function(data) {
+                        var err = JSON.parse(result.responseText);
+                        showNotify(err.result, 'danger');
+                    });
             });
         });
 
-        function ToggleScreen(arg) {
-            $('#contactForm .form-control').val('');
-            $('#contactTable').hide();
-            $('#contactForm').hide();
-            $('#addContact').show();
-            if (arg) {
-                $('#contact' + arg).show();
-            }
-            if (arg == 'Form') {
-                $('#addContact').hide();
-            }
-        }
-
-        function GetUserList() {
+        function GetContactList() {
             $.ajax({
-                    url: 'server/postUser.php',
+                    url: 'postContact.php',
                     method: 'POST',
                     dataType: 'json',
                     data: ({
-                        GetUserList: true
+                        GetContact: true,
                     }),
                     beforeSend: ShowLoadingFn
                 })
@@ -209,16 +139,15 @@
                 }, ],
                 columns: [{
                         render: function(data, type, row, meta) {
-                            var dhtml = '<button class="btn btn-warning btn-sm mr-4" onclick="DoUpdateUser(' + row.UserId + ')"><i class="fa fa-edit"></i></button>';
-                            dhtml += '<button class="btn btn-danger btn-sm" onclick="DoDeleteUser(' + row.UserId + ')"><i class="fa fa-trash"></i></button>';
+                            var dhtml = '<button class="btn btn-warning btn-sm mr-4" onclick="GetContactDetails(' + row.Id + ')"><i class="fa fa-edit"></i></button>';
+                            dhtml += '<button class="btn btn-danger btn-sm" onclick="DeleteContact(' + row.Id + ')"><i class="fa fa-trash"></i></button>';
                             return dhtml;
                         },
                     },
                     {
-                        data: "FullName",
-                        name: "FullName"
+                        data: "Name",
+                        name: "Name"
                     },
-
                     {
                         data: "Email",
                         name: "Email"
@@ -228,33 +157,41 @@
                         name: "Mobile"
                     },
                     {
-                        data: "Notes",
-                        name: "Notes"
-                    },
-                    {
                         data: "Status",
                         name: "Status"
                     },
+                    {
+                        data: "Notes",
+                        name: "Notes"
+                    },
+
                 ]
             })
 
         }
 
-        function AddContact(formData) {
+        function GetContactDetails(Id) {
             $.ajax({
-                    url: 'server/postUser.php',
+                    url: 'postContact.php',
                     method: 'POST',
                     dataType: 'json',
-                    data: formData,
+                    data: ({
+                        GetContact: true,
+                        Id: Id
+                    }),
                     beforeSend: ShowLoadingFn
                 })
                 .done(function(data) {
                     if (data.Status) {
-                        showNotify('Contact Added Successfully!', 'success');
-                        ToggleScreen('Table');
-                        GetUserList();
+                        $('input[name="Id"]').val(Id);
+                        $('#AddContactModal').modal('show');
+                        $('input[name="Name"]').val(data.Result.Name);
+                        $('input[name="Mobile"]').val(data.Result.Mobile);
+                        $('input[name="Email"]').val(data.Result.Email);
+                        $('select[name="Status"]').val(data.Result.Status);
+                        $('textarea[name="Notes"]').val(data.Result.Notes);
                     } else
-                        showNotify(data.Result, 'danger');
+                        showNotify(data.Error, 'danger');
                 })
                 .always(function() {
                     HideLoadingFn();
@@ -265,23 +202,29 @@
                 });
         }
 
-        function DoDeleteUser(arg) {
+        $('#AddContactModal').on('show.bs.modal', function(event) {
+            $('#addcontactTitle').text('Update Contact');
+            $('button[type="submit"]').text('Update');
+            $('input[name="ModifyContact"]').val('Update');
+        });
+
+        function DeleteContact(Id) {
             $.ajax({
-                    url: 'server/postUser.php',
+                    url: 'postContact.php',
                     method: 'POST',
                     dataType: 'json',
                     data: ({
-                        DeleteContact: true,
-                        UserId: arg
+                        ModifyContact: "Delete",
+                        Id: Id
                     }),
                     beforeSend: ShowLoadingFn
                 })
                 .done(function(data) {
                     if (data.Status) {
-                        showNotify('Contact Deleted Successfully!', 'success');
-                        GetUserList();
+                        showNotify(data.Result, 'warning');
+                        GetContactList();
                     } else
-                        showNotify(data.Result, 'danger');
+                        showNotify(data.Error, 'danger');
                 })
                 .always(function() {
                     HideLoadingFn();

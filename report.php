@@ -35,14 +35,26 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                <li class="nav-item">
-                                    <button class="btn btn-primary nav-link active" id="Answered" onclick="GetOutBoundCalls(this.id)">Answered</button>
-                                </li>
-                                <li class="nav-item">
-                                    <button class="btn btn-primary nav-link" id="Missed" onclick="GetOutBoundCalls(this.id)">Missed</button>
-                                </li>
-                            </ul>
+                            <div class="d-flex px-4">
+                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <button class="btn btn-primary nav-link active" id="Answered" onclick="GetOutBoundCalls(this.id)">Answered</button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <button class="btn btn-primary nav-link" id="Missed" onclick="GetOutBoundCalls(this.id)">Missed</button>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-pills ml-auto">
+                                    <li class="nav-item d-flex align-items-center">
+                                        <label class="mr-3">From</label>
+                                        <input class="form-control form-control-sm" type="date" name="fromDate">
+                                    </li>
+                                    <li class="nav-item d-flex align-items-center">
+                                        <label class="mr-3">To</label>
+                                        <input class="form-control form-control-sm" type="date" name="toDate">
+                                    </li>
+                                </ul>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table table-sm table-hover" id="userTable">
                                     <thead>
@@ -66,19 +78,18 @@
     <?php require_once("_footer.html"); ?>
     <?php require_once("_addcontact.html"); ?>
     <script>
-        var todate = new Date();
-        var fromdate = new Date();
-        fromdate.setDate(todate.getDate() - 13);
-
-        var datastr = {
-            "token": localStorage.getItem('token'),
-            "from": Date.parse(fromdate),
-            "to": Date.parse(todate),
-            "page": 1,
-        }
-
         $(function() {
-            GetOutBoundCalls('Answered');
+            var type = "Answered";
+            var today = new Date();
+            var fromdatestr = new Date();
+            var todatestr = new Date();
+            fromdatestr.setDate(today.getDate() - 1);
+            todatestr.setDate(today.getDate() + 1);
+
+            $('input[name="fromDate"]').val(moment(fromdatestr).format("YYYY-MM-DD"));
+            $('input[name="toDate"]').val(moment(todatestr).format("YYYY-MM-DD"));
+
+            GetOutBoundCalls(type);
 
             $('#contactForm').on('submit', function(e) {
                 e.preventDefault();
@@ -91,15 +102,9 @@
                         beforeSend: ShowLoadingFn
                     })
                     .done(function(data) {
-                        if (data.code == 200) {
-                            showNotify("Login Success", 'success');
-                            localStorage.setItem("token", data.token);
-                            localStorage.setItem("userData", JSON.stringify(data.agent));
-                            window.location.href = "index.php";
-                        } else if (data.code == 404) {
-                            showNotify('Invalid agent id or password', 'warning');
-                        } else {
-                            showNotify('Authentication failed', 'danger');
+                        if (data.Result) {
+                            showNotify(data.Result, 'success');
+                            $('#AddContactModal').modal('hide');
                         }
                     })
                     .always(function() {
@@ -109,9 +114,22 @@
                         showNotify('Server Error', 'danger');
                     });
             });
+
         })
 
         function GetOutBoundCalls(arg) {
+            type = arg;
+
+            var fromdate = $('input[name="fromDate"]').val();
+            var todate = $('input[name="toDate"]').val();
+
+            var datastr = {
+                "token": localStorage.getItem('token'),
+                "from": Date.parse(fromdate),
+                "to": Date.parse(todate),
+                "page": 1,
+            }
+
             $('#pills-tab li button').removeClass('active');
             $('#' + arg).addClass('active');
             var dataurl = 'https://piopiy.telecmi.com/v1/agentOut' + arg;
@@ -124,7 +142,6 @@
                     beforeSend: ShowLoadingFn
                 })
                 .done(function(data) {
-                    console.log(data);
                     BindUserTable(data.cdr);
                 })
                 .always(function() {
@@ -135,6 +152,12 @@
                     showNotify(result.Error, 'danger');
                 });
         }
+
+
+        $('input[type="date"]').on('change', function() {
+            GetOutBoundCalls(type);
+
+        });
 
         function BindUserTable(result) {
             $('#userTable').DataTable({
@@ -181,10 +204,9 @@
 
         $('#AddContactModal').on('show.bs.modal', function(event) {
             var mobile = $(event.relatedTarget).data('mobile');
-            console.log(mobile);
+            $('#contactForm .form-control').val('');
             $(this).find('input[name="Mobile"]').val(mobile);
         })
-       
     </script>
 </body>
 

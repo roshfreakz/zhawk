@@ -40,11 +40,14 @@
                                         </div>
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                                                <i class="ni ni-chart-pie-35"></i>
+                                                <i class="fa fa-phone-volume"></i>
                                             </div>
                                         </div>
                                     </div>
-
+                                    <p class="mt-3 mb-0 text-sm">
+                                        <span class="text-success mr-2"><i class="fa fa-clock"></i></span>
+                                        <span class="text-nowrap">Last 24 Hours</span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -59,11 +62,14 @@
                                         </div>
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                                                <i class="ni ni-money-coins"></i>
+                                                <i class="fa fa-phone-slash"></i>
                                             </div>
                                         </div>
                                     </div>
-
+                                    <p class="mt-3 mb-0 text-sm">
+                                        <span class="text-success mr-2"><i class="fa fa-clock"></i></span>
+                                        <span class="text-nowrap">Last 24 Hours</span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -78,11 +84,14 @@
                                         </div>
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
-                                                <i class="ni ni-chart-bar-32"></i>
+                                                <i class="fa fa-phone"></i>
                                             </div>
                                         </div>
                                     </div>
-
+                                    <p class="mt-3 mb-0 text-sm">
+                                        <span class="text-success mr-2"><i class="fa fa-clock"></i></span>
+                                        <span class="text-nowrap">Last 24 Hours</span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +105,7 @@
     <script>
         var todate = new Date();
         var fromdate = new Date();
-        fromdate.setDate(todate.getDate() - 13);
+        fromdate.setDate(todate.getDate() - 1);
 
         var datastr = {
             "token": localStorage.getItem('token'),
@@ -121,8 +130,8 @@
                 .done(function(data) {
                     console.log(data);
                     if (data.code == 200) {
-                        if (data.calls.length > 0) {  
-                            var call = data.calls[0];                          
+                        if (data.calls.length > 0) {
+                            var call = data.calls[0];
                             $('#AnsweredCalls').text(call.answered);
                             $('#MissedCalls').text(call.missed);
                             $('#TotalCalls').text(call.answered + call.missed);

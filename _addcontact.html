@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary ">
-                <h3 class="modal-title text-white">Add Contact</h3>
+                <h3 class="modal-title text-white" id="addcontactTitle">Add Contact</h3>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true ">&times;</span>
                 </button>
@@ -14,7 +14,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-username">Name</label>
-                                <input class="form-control" name="FullName" type="text" required>
+                                <input class="form-control" name="Name" type="text" required>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -37,9 +37,9 @@
                             <div class="form-group">
                                 <label class="form-control-label" for="input-first-name">Status</label>
                                 <select class="form-control" name="Status" required>
-                                    <option>Online</option>
-                                    <option>Do Not Disturb</option>
-                                    <option>Start Campaign</option>
+                                    <option>Hot lead</option>
+                                    <option>Follow Up</option>
+                                    <option>End</option>
                                 </select>
                             </div>
                         </div>
@@ -56,7 +56,8 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         </div>
                         <div class="col text-right">
-                            <input type="hidden" name="AddContact" value="true">
+                            <input type="hidden" name="ModifyContact" value="Add">
+                            <input type="hidden" name="Id" value="">
                             <button type="submit" class="btn btn-success">Save</button>
                         </div>
                     </div>

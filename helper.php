@@ -16,17 +16,13 @@ class ResponseModel
 
 class UserModel
 {
-    public $UserId;
-    public $FullName;
+    public $Name;
     public $Mobile;
     public $Email;
-    public $Password;
     public $Status;
     public $Notes;
     public $CDate;
 }
-
-
 
 function testinput($data)
 {
@@ -35,11 +31,6 @@ function testinput($data)
     $data = addslashes($data);
     $data = htmlspecialchars($data);
     return $data;
-}
-
-function GetRandomString($len)
-{
-    return substr(md5(time()), 0, $len);
 }
 
 function ExecuteQuery($query)

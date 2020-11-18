@@ -32,6 +32,11 @@
                         </div>
                     </a>
                     <div class="dropdown-menu  dropdown-menu-right ">
+                        <a class="dropdown-item" data-toggle="modal" data-target="#UpdateStatusModal">
+                            <i class="fa fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
                         <a href="login.php" class="dropdown-item">
                             <i class="fa fa-sign-out-alt"></i>
                             <span>Logout</span>
@@ -42,3 +47,42 @@
         </div>
     </div>
 </nav>
+
+<div class="modal fade" id="UpdateStatusModal" tabindex="-1" role="dialog" aria-labelledby="UpdateStatusModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary ">
+                <h3 class="modal-title text-white">Update Status</h3>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true ">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="statusForm">                                  
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label" for="agentStatus">Status</label>
+                                <select class="form-control" name="Status" id="agentStatus" required>
+                                    <option value="o">Online</option>
+                                    <option value="d">Do Not Disturb</option>
+                                    <option value="s">Start Campaign</option>
+                                </select>
+                            </div>
+                        </div>                       
+                    </div>
+                    <hr class="my-4">
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                        <div class="col text-right">
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
