@@ -12,10 +12,24 @@ $(function () {
   if (npath) $('#navbar-sidebar li a[href="' + npath + '"]').addClass('active');
   else $('#navbar-sidebar li a[href="index.php"]').addClass('active');
 
-  // Set Agent Status
+
   var telecmi = new TeleCMI();
   telecmi.start(localStorage.getItem('token'));
-  
+  telecmi.onConnect = function (data) {
+    if (data.status == 'connected') {
+      telecmi.subscribeCalls();
+      console.log("subs");
+    } else if (data.status == 'error') {
+      showNotify('Agent Status Error', 'danger');
+    }
+  };
+
+  if (localStorage.getItem("agentStatus") != null) {
+    $('#agentStatus').val(localStorage.getItem('agentStatus'));
+  } else {
+    telecmi.setOnline();
+  }
+
   $('#statusForm').on('submit', function (e) {
     e.preventDefault();
     var status = $('#agentStatus').val();
@@ -32,7 +46,26 @@ $(function () {
     }
     showNotify('Agent Status Updated', 'success');
     $('#UpdateStatusModal').modal('hide');
-    $('#agentStatus').val(status);
+    localStorage.setItem("agentStatus", status);
+    $('#agentStatus').val(localStorage.getItem('agentStatus'));
   });
+
+
+  telecmi.onCalls = function (data) {
+    console.log(data);
+    $('#callerNumber').text(data.from);
+    switch (data.action) {
+      case "ch-c":
+        $('#callNotifyModal').modal('show');
+        break;
+      case "ch-s":
+        $('#callerStatus').text('Ringing...');
+        break;
+      case "ch-d":
+        $('#callerStatus').text('Call Ended');
+        break;
+    }
+  };
+
 
 });
