@@ -18,7 +18,6 @@ $(function () {
   telecmi.onConnect = function (data) {
     if (data.status == 'connected') {
       telecmi.subscribeCalls();
-      console.log("subs");
     } else if (data.status == 'error') {
       showNotify('Agent Status Error', 'danger');
     }
@@ -53,13 +52,15 @@ $(function () {
 
   telecmi.onCalls = function (data) {
     console.log(data);
-    $('#callerNumber').text(data.from);
+    $('#callerNumber').text(data.to);
     switch (data.action) {
       case "ch-c":
         $('#callNotifyModal').modal('show');
+        $('#callerStatus').text('Ringing...');
         break;
       case "ch-s":
-        $('#callerStatus').text('Ringing...');
+        $('#callNotifyModal').modal('show');
+        $('#callerStatus').text('Call Connected');
         break;
       case "ch-d":
         $('#callerStatus').text('Call Ended');

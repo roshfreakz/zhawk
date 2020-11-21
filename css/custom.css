@@ -145,10 +145,6 @@
     z-index: 2000;
 }
 
-.modal.show .modal-dialog{
-    margin: 0;
-}
-
 .callNotifyModal {
     width: unset;
     height: unset;
